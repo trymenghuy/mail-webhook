@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 
 import requests
+from dotenv import load_dotenv
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -26,7 +27,8 @@ def send_telegram_message():
             'text': message,
             'parse_mode': 'HTML'
         }
-        
+
+
         response = requests.post(
             f"https://api.telegram.org/bot{token}/sendMessage",
             data=data,
@@ -46,6 +48,7 @@ def send_telegram_message():
 
 if __name__ == "__main__":
     logger.info("🚀 Cron job starting...")
+    load_dotenv()
     success = send_telegram_message()
     logger.info("✅ Cron job completed" if success else "❌ Cron job failed")
     exit(0 if success else 1)
